@@ -28,7 +28,6 @@ ClassMethod test1() [ Language = python ]
  
  # 更新を実行 
  for row in df2.itertuples():
- 	print(row.id, row.p1 ,row.p2)
  	sql="update HoleFoods.Product Set Price="+str(row.p1*2) +" where ID='"+row.id+"'"
  	iris.sql.exec(sql)
 }
