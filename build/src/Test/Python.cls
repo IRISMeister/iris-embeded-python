@@ -7,7 +7,7 @@ ClassMethod test1() [ Language = python ]
  import pandas as pd
  import numpy as np
 
- df = iris.sql.exec('select ID,Price p1 ,Price p2 from HoleFoods.Product').dataframe()
+ df = iris.sql.exec('select ID,Price p1 ,Price*2 p2 from HoleFoods.Product').dataframe()
  print(type(df))
  print(df)
 
