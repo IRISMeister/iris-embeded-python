@@ -29,7 +29,7 @@ np_ids=df["id"].to_numpy()
 df2["id"] = np_ids
 print(df2)
 
-sql = """UPDATE HoleFoods.Product Set Price=? WHERE ID=?"""
+sql = "UPDATE HoleFoods.Product Set Price=? WHERE ID=?"
 stmt = iris.sql.prepare(sql)
 
 # 更新を実行 
