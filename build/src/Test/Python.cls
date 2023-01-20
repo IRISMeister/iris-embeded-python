@@ -3,33 +3,41 @@ Class Test.Python
 
 ClassMethod test1() [ Language = python ]
 {
- import iris
- import pandas as pd
- import numpy as np
+import iris
+import pandas as pd
+import numpy as np
 
- df = iris.sql.exec('select ID,Price p1 ,Price*2 p2 from HoleFoods.Product').dataframe()
- print(type(df))
- print(df)
+df = iris.sql.exec('select ID,Price p1 ,Price*2 p2 from HoleFoods.Product').dataframe()
+print(type(df))
+print(df)
 
- # DataFrameをnumpy.ndarrayに変換
- a_df=df[['p1','p2']].to_numpy()
- print(type(a_df))
- print(a_df.dtype)
- print(a_df)
- 
- # numpy.ndarrayをDataFrameに変換
- columns = ['p1', 'p2']
- df2 = pd.DataFrame(data=a_df,columns=columns)
+# DataFrameをnumpy.ndarrayに変換
+array1=df[['p1','p2']].to_numpy()
+print(type(array1))
+print(array1.dtype)
+print(array1)
 
- # テーブルのプライマリキーを再生
- np_ids=df["id"].to_numpy()
- df2["id"] = np_ids
- print(df2)
- 
- # 更新を実行 
- for row in df2.itertuples():
- 	sql="update HoleFoods.Product Set Price="+str(row.p1*2) +" where ID='"+row.id+"'"
- 	iris.sql.exec(sql)
+# 演算
+array2=array1*2
+
+# numpy.ndarrayをDataFrameに変換
+columns = ['p1', 'p2']
+df2 = pd.DataFrame(data=array2,columns=columns)
+
+# テーブルのプライマリキーを再生
+np_ids=df["id"].to_numpy()
+df2["id"] = np_ids
+print(df2)
+
+sql = """UPDATE HoleFoods.Product Set Price=? WHERE ID=?"""
+stmt = iris.sql.prepare(sql)
+
+# 更新を実行 
+for row in df2.itertuples():
+	try: 
+		rs=stmt.execute(str(row.p1),row.id)
+	except Exception as ex:
+		print ('ERROR!!', repr(ex))
 }
 
 }

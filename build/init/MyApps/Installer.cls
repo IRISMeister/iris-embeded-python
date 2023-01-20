@@ -19,8 +19,10 @@ ClassMethod setup(ByRef tVars) As %Status
     $$$ThrowOnError(tSC)
 #EndIf
 
+    #; Load sample datasets.
     Set $NAMESPACE="USER"
     zpm "install samples-bi"
+    zpm "install bdb-nytaxi"
 
   } Catch(e) {
 	  Set tSC=e.AsStatus()
