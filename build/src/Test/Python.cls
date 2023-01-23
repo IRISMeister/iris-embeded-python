@@ -37,7 +37,10 @@ for row in df2.itertuples():
 	try: 
 		rs=stmt.execute(str(row.p1),row.id)
 	except Exception as ex:
-		print ('ERROR!!', repr(ex))
+		if ex.sqlcode == 100:
+			print ('The record dosen\'t exist anymore. ID=',row.id)
+		if ex.sqlcode != 100:
+			print ('SQL error', ex.message, ex.sqlcode, ex.statement)
 }
 
 }
