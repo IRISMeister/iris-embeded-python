@@ -40,3 +40,5 @@ RUN iris start $ISC_PACKAGE_INSTANCENAME nostu quietly \
  && echo $COMMIT_ID > $HOME/commit.txt
 
 RUN pip install pandas
+# Community developed sqlalchemy driver.
+#RUN pip install sqlalchemy-iris https://github.com/grongierisc/iris-driver-distribution/raw/main/DB-API/intersystems_iris-3.3.0-py3-none-any.whl
