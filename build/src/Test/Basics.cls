@@ -35,9 +35,9 @@ Method GetTestGlobal() As %Numeric
     quit ^Test
 }
 
-Method WriteTestGlobal()
+Method WriteTestGlobal() As %Status
 {
-    write !, "Hello there", !
+    write !, "こんにちは", !
     write ^Test
     quit $$$OK
 }

@@ -1,0 +1,75 @@
+ROUTINE runall
+    ;
+    ; Examples how to call user written python modules from within IRIS.
+    ;
+    Do setextrapath()
+
+    Do basic()
+    Do numpy()
+    Do barchart()
+    Do sql()
+    Do jp()
+    ;Do pycuda()
+
+    ;
+    ; Examples how to call IRIS class which is implemeted by python.
+    ;
+    Do ##class(Test.Python).test1()
+    ; Works only if you installed community IRIS-SQLAlchemy
+    ;Do ##class(Test.Python2).test1()
+
+    set o=##class(Test.Basics).%New()
+    w "Should return 1 : ",o.Test2a(),!
+    w "Should return 1 : ",o.Test2b(),!
+    w "Should be ""Test2b"" : ",o.VariableMessage,!
+    Do o.SetTestGlobal(42)
+    w "Should be 42 : ",o.GetTestGlobal(),!
+    Set tSC=o.WriteTestGlobal() w !
+
+    w "Should be 1: ",o.Test1a(),!
+    Set retval=o.Test1b()
+
+    Set retval=o.Sql()
+
+    Return
+
+basic() public {
+    set d=##class(%SYS.Python).Import("datetime")
+    zw d
+    set today=d.date.today()
+    w today.isoformat(),!
+    set b=##class(%SYS.Python).Import("builtins")
+    d b.print("Hello world")
+}
+numpy() public {
+    set b=##class(%SYS.Python).Import("builtins")
+    set npf=##class(%SYS.Python).Import("numpy_financial")
+    set futurevalue=npf.fv(0.05/12,10*12,-100,-100)
+    write b.str(futurevalue),!
+}
+barchart() public {
+    set barchart=##class(%SYS.Python).Import("barchart")
+    set df=barchart.exampleDF()
+    do barchart.buildGraph("/home/irisowner/out/barchart_example.svg",df,"Country","GDP_Per_Capita")
+}
+
+sql() public {
+    set b=##class(%SYS.Python).Import("sql")
+    Do b.run()
+}
+
+jp() public {
+    set b=##class(%SYS.Python).Import("jp")
+    Set ret=b.run()
+    w ret,!
+}
+
+pycuda() public {
+    w ##class(%SYS.Python).Import("hello_gpu.py"),!
+    w ##class(%SYS.Python).Import("pycuda_numpy.py"),!
+}
+
+setextrapath() public {
+    set sys=##class(%SYS.Python).Import("sys")
+    do sys.path.append("/home/irisowner/python/")
+}

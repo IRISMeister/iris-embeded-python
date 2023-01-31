@@ -1,4 +1,4 @@
-FROM containers.intersystems.com/intersystems/iris-community:2022.2.0.368.0
+FROM containers.intersystems.com/intersystems/iris-community:2022.3.0.589.0
 
 ARG COMMIT_ID="unknown"
 
@@ -36,9 +36,11 @@ RUN iris start $ISC_PACKAGE_INSTANCENAME nostu quietly \
  && rm -f $ISC_PACKAGE_INSTALLDIR/mgr/journal/* \
  && rm -f $ISC_PACKAGE_INSTALLDIR/mgr/messages.log \
  && touch $ISC_PACKAGE_INSTALLDIR/mgr/messages.log \
- && rm -rf $SRCDIR \
  && echo $COMMIT_ID > $HOME/commit.txt
 
-RUN pip install pandas
+RUN pip install pandas numpy_financial matplotlib scikit-learn boto3
+# if you have a CUDA environment
+#RUN pip install pycuda
+
 # Community developed sqlalchemy driver.
 #RUN pip install sqlalchemy-iris https://github.com/grongierisc/iris-driver-distribution/raw/main/DB-API/intersystems_iris-3.3.0-py3-none-any.whl
