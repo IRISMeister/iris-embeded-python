@@ -38,7 +38,7 @@ RUN iris start $ISC_PACKAGE_INSTANCENAME nostu quietly \
  && touch $ISC_PACKAGE_INSTALLDIR/mgr/messages.log \
  && echo $COMMIT_ID > $HOME/commit.txt
 
-RUN pip install pandas numpy_financial matplotlib scikit-learn boto3
+RUN pip install pandas numpy_financial matplotlib scikit-learn boto3 geopy
 # if you have a CUDA environment
 #RUN pip install pycuda
 
