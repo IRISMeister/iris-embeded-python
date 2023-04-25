@@ -4,6 +4,11 @@ Use _SYSTEM / SYS as a credential.
 
 ```
 $ docker-compose up -d
+
+全て実行
+$ docker-compose exec iris iris session iris "runall"
+
+個別実行
 $ docker-compose exec iris iris session iris "##class(Test.Python).test1()"
 <class 'pandas.core.frame.DataFrame'>
          id    p1     p2

@@ -6,8 +6,7 @@ services:
       context: ./build
     hostname: iris
     container_name: iris
-    command:
-      --check-caps false
+    command: --ISCAgent false --monitorCPF false
     depends_on:
       - busybox
 

@@ -1,4 +1,4 @@
-FROM containers.intersystems.com/intersystems/iris-community:2022.3.0.589.0
+FROM containers.intersystems.com/intersystems/iris-community:2023.1.0.229.0
 
 ARG COMMIT_ID="unknown"
 
@@ -43,4 +43,5 @@ RUN pip install pandas numpy_financial matplotlib scikit-learn boto3 geopy
 #RUN pip install pycuda
 
 # Community developed sqlalchemy driver.
-#RUN pip install sqlalchemy-iris https://github.com/grongierisc/iris-driver-distribution/raw/main/DB-API/intersystems_iris-3.3.0-py3-none-any.whl
+RUN pip install sqlalchemy
+RUN pip install sqlalchemy-iris https://github.com/intersystems-community/intersystems-irispython/releases/download/3.6.0/intersystems_iris-3.6.0-py3-none-any.whl

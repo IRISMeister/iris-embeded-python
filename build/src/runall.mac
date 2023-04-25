@@ -19,7 +19,8 @@ ROUTINE runall
 class() public {
     Do ##class(Test.Python).test1()
     ; Works only if you installed community IRIS-SQLAlchemy
-    ;Do ##class(Test.Python2).test1()
+    Do ##class(Test.Python2).test1()
+    Do ##class(Test.Python3).test1()
 
     set o=##class(Test.Basics).%New()
     Do o.SetTestGlobal(42)
