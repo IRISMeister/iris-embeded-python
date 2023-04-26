@@ -49,6 +49,7 @@ ClassMethod setup(ByRef tVars) As %Status
     Set tSC = ##Class(Security.Applications).Get(webapp,.props)
     $$$ThrowOnError(tSC)
     Set props("DispatchClass")="Rest.Dispatcher"
+    Set props("Recurse")=1  // need this for UrlMap /path/:p1 to work
     Set props("Resource")=""
     Set props("DeepSeeEnabled")=0
     Set props("MatchRoles")=":%DB_USER"
