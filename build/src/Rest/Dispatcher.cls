@@ -1,7 +1,7 @@
 /// curl -u "appuser:sys" -H "Content-Type: application/json" http://localhost:52773/csp/user-rest/get
 /// curl -u "appuser:sys" -H "Content-Type: application/json" http://localhost:52773/csp/user-rest/getp
-/// curl -u "appuser:sys" -X POST -H "Content-Type: application/json" -d "@req.json" http://localhost:52773/csp/user-rest/post
-/// curl -u "appuser:sys" -X POST -H "Content-Type: application/json" -d "@req.json" http://localhost:52773/csp/user-rest/postp
+/// curl -u "appuser:sys" -X POST -H "Content-Type: application/json" -d "@req.json" http://localhost:52773/csp/user-rest/post/123
+/// curl -u "appuser:sys" -X POST -H "Content-Type: application/json" -d "@req.json" http://localhost:52773/csp/user-rest/postp/123
 Class Rest.Dispatcher Extends %CSP.REST
 {
 
@@ -30,6 +30,7 @@ ClassMethod Get() As %Status
 ClassMethod GetPython() [ Language = python ]
 {
 	import json,iris
+	
 	iris.cls('%REST.Impl')._SetHeader("Content-Type","application/json")
 	sample_dict = {'A': 'apple', 'B': 'banana', 'C': 'carrot', 'D': 'drink', 'E': '卵'}
 	jsonstring=json.dumps(sample_dict,ensure_ascii=False)
@@ -37,7 +38,7 @@ ClassMethod GetPython() [ Language = python ]
 	return True
 }
 
-ClassMethod Post(p1) As %Status
+ClassMethod Post(p1 = "") As %Status
 {
     Do ##class(%REST.Impl).%SetHeader("Content-Type","application/json")
     Set req={}.%FromJSON(%request.Content)
@@ -46,7 +47,7 @@ ClassMethod Post(p1) As %Status
     Return $$$OK
 }
 
-ClassMethod PostPython(p1) [ Language = python ]
+ClassMethod PostPython(p1 = "") [ Language = python ]
 {
 	import json,iris
 
@@ -54,7 +55,7 @@ ClassMethod PostPython(p1) [ Language = python ]
 	req_dict=json.loads(req)
 
 	iris.cls('%REST.Impl')._SetHeader("Content-Type","application/json")
-	sample_dict = {'p1': p1 ,'A': 'apple', 'B': 'banana', 'C': 'carrot', 'D': 'drink', 'E': '卵', "F": req_dict['name']}
+	sample_dict = {'p1': str(p1) ,'A': 'apple', 'B': 'banana', 'C': 'carrot', 'D': 'drink', 'E': '卵', "F": req_dict['name']}
 	jsonstring=json.dumps(sample_dict,ensure_ascii=False)
 	iris.cls('%REST.Impl')._WriteResponse(jsonstring)
 	return True

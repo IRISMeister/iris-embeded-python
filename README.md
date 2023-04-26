@@ -79,18 +79,20 @@ $ curl -u "appuser:sys" -H "Content-Type: application/json" http://localhost:527
                                  Dload  Upload   Total   Spent    Left  Speed
 100    70  100    70    0     0   9417      0 --:--:-- --:--:-- --:--:-- 10000
 {
+  "p1": "123",
   "A": "apple",
   "B": "banana",
   "C": "carrot",
   "D": "drink",
   "E": "卵"
 }
-$ curl -u "appuser:sys" -X POST -H "Content-Type: application/json" -d "@req.json" http://localhost:52773/csp/user-rest/postp | jq
+$ curl -u "appuser:sys" -X POST -H "Content-Type: application/json" -d "@req.json" http://localhost:52773/csp/user-rest/postp/123 | jq
 
 % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   119  100    83  100    36  10918   4735 --:--:-- --:--:-- --:--:-- 17000
 {
+  "p1": "123",  
   "A": "apple",
   "B": "banana",
   "C": "carrot",
@@ -100,3 +102,5 @@ $ curl -u "appuser:sys" -X POST -H "Content-Type: application/json" -d "@req.jso
 }
 ```
 
+起動直後(cspのデーモンが存在しない)のコール時のみ/:p1で渡した値が正しく「伝わらない」問題あり。
+csp min=3となっている関係で、3コール目までは発生。
