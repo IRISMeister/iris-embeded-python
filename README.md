@@ -72,7 +72,7 @@ float64
 16  27.8   55.6  SKU-928
 ```
 
-RESTコール
+RESTコール (実験コードです)
 ```
 $ curl -u "appuser:sys" -H "Content-Type: application/json" http://localhost:52773/csp/user-rest/getp | jq
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -102,5 +102,8 @@ $ curl -u "appuser:sys" -X POST -H "Content-Type: application/json" -d "@req.jso
 }
 ```
 
-起動直後(cspのデーモンが存在しない)のコール時のみ/:p1で渡した値が正しく「伝わらない」問題あり。
-csp min=3となっている関係で、3コール目までは発生。
+PythonでDispatchを記述した場合に限り、起動直後(cspのデーモンが存在しない)のコール時のみ/:p1で渡した値が正しく「伝わらない」問題あり。
+csp min=3となっている関係で、3コール目までは発生。Windowsでも発生。
+```
+  "p1": "\u0000\u0000\u0000"
+```
