@@ -4,11 +4,15 @@ Use _SYSTEM / SYS as a credential.
 
 ```
 $ docker-compose up -d
+```
 
 全て実行
+```
 $ docker-compose exec iris iris session iris "runall"
+```
 
 個別実行
+```
 $ docker-compose exec iris iris session iris "##class(Test.Python).test1()"
 <class 'pandas.core.frame.DataFrame'>
          id    p1     p2
@@ -66,5 +70,22 @@ float64
 14  23.8   47.6  SKU-712
 15  35.8   71.6  SKU-900
 16  27.8   55.6  SKU-928
+```
+
+RESTコール
+```
+$ curl -u "appuser:sys" -X POST -H "Content-Type: application/json" -d "@req.json" http://localhost:52773/csp/user-rest/postp | jq
+
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   119  100    83  100    36  10918   4735 --:--:-- --:--:-- --:--:-- 17000
+{
+  "A": "apple",
+  "B": "banana",
+  "C": "carrot",
+  "D": "drink",
+  "E": "卵",
+  "F": "あいうえお"
+}
 ```
 
