@@ -74,6 +74,17 @@ float64
 
 RESTコール
 ```
+$ curl -u "appuser:sys" -H "Content-Type: application/json" http://localhost:52773/csp/user-rest/getp | jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    70  100    70    0     0   9417      0 --:--:-- --:--:-- --:--:-- 10000
+{
+  "A": "apple",
+  "B": "banana",
+  "C": "carrot",
+  "D": "drink",
+  "E": "卵"
+}
 $ curl -u "appuser:sys" -X POST -H "Content-Type: application/json" -d "@req.json" http://localhost:52773/csp/user-rest/postp | jq
 
 % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
