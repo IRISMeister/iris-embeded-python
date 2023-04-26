@@ -1,3 +1,5 @@
+# コミュニティ提供のSQLAlchemy及びDB-APIを使用しています。
+# pip install sqlalchemy-iris https://github.com/intersystems-community/intersystems-irispython/releases/download/3.6.0/intersystems_iris-3.6.0-py3-none-any.whl
 
 import pandas as pd
 
@@ -17,22 +19,7 @@ df = pd.DataFrame({
 
 sql='select ID id,Price p1 ,Price*2 p2 from HoleFoods.Product'
 
-engine = create_engine("iris://_SYSTEM:SYS@localhost:1972/USER")
-with engine.connect() as conn:
-    rs = conn.execute(sql)
-    for row in rs:
-        print(row)
-
-# create a table in IRIS
-df.to_sql('iris_table', engine, if_exists='replace', schema='sqlalchemy')
-
-# read the table back from IRIS 
-df2 = pd.read_sql('select * from sqlalchemy.iris_table', engine)
-# print the dataframe
-print(df2)
-
-
-
+# 埋め込みPython
 engine2 = create_engine('iris+emb:///USER')
 with engine2.connect() as conn:
     rs = conn.execute(sql)
