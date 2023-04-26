@@ -9,6 +9,14 @@ ARG COMMIT_ID="unknown"
 #RUN apt-get update && apt-get install -y language-pack-ja && update-locale LANG=ja_JP.UTF-8
 #USER irisowner
 
+RUN pip install pandas numpy_financial matplotlib scikit-learn boto3 geopy
+# if you have a CUDA environment
+#RUN pip install pycuda
+
+# Community developed sqlalchemy driver.
+RUN pip install sqlalchemy
+RUN pip install sqlalchemy-iris https://github.com/intersystems-community/intersystems-irispython/releases/download/3.6.0/intersystems_iris-3.6.0-py3-none-any.whl
+
 ENV SRCDIR=src
 ENV INITDIR=init
 
@@ -38,10 +46,3 @@ RUN iris start $ISC_PACKAGE_INSTANCENAME nostu quietly \
  && touch $ISC_PACKAGE_INSTALLDIR/mgr/messages.log \
  && echo $COMMIT_ID > $HOME/commit.txt
 
-RUN pip install pandas numpy_financial matplotlib scikit-learn boto3 geopy
-# if you have a CUDA environment
-#RUN pip install pycuda
-
-# Community developed sqlalchemy driver.
-RUN pip install sqlalchemy
-RUN pip install sqlalchemy-iris https://github.com/intersystems-community/intersystems-irispython/releases/download/3.6.0/intersystems_iris-3.6.0-py3-none-any.whl
