@@ -19,7 +19,7 @@ XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 </Routes>
 }
 
-ClassMethod Get()
+ClassMethod Get() As %Status
 {
     Do ..%SetHeader("Content-Type","application/json")
 	Set ret={"A": "apple", "B": "banana", "C": "carrot", "D": "drink", "E": "卵"}
@@ -37,7 +37,7 @@ ClassMethod GetPython() [ Language = python ]
 	return True
 }
 
-ClassMethod Post()
+ClassMethod Post() As %Status
 {
     Do ..%SetHeader("Content-Type","application/json")
     Set req={}.%FromJSON(%request.Content)
@@ -54,7 +54,7 @@ ClassMethod PostPython() [ Language = python ]
 	req_dict=json.loads(req)
 
 	iris.cls('%REST.Impl')._SetHeader("Content-Type","application/json")
-	sample_dict = {'A': 'apple', 'B': 'banana', 'C': 'carrot', 'D': 'drink', 'E': '卵', "F": req_dict['name']}
+	sample_dict = {'p1': 123 ,'A': 'apple', 'B': 'banana', 'C': 'carrot', 'D': 'drink', 'E': '卵', "F": req_dict['name']}
 	jsonstring=json.dumps(sample_dict,ensure_ascii=False)
 	iris.cls('%REST.Impl')._WriteResponse(jsonstring)
 	return True
