@@ -35,12 +35,22 @@ ClassMethod modify2()
 
 	set wb = openpyxl."load_workbook"("/home/irisowner/rsc/Book1.xlsx")
 	Set ws=wb."__getitem__"("Sheet1")
-	set cell=ws.cell(1,1) ;; A1 = (1,1)
 	Set caddr=wb."defined_names"."__getitem__"("aaa")."attr_text" ; caddr="Sheet1!$B$1"
 	Set caddr=$P(caddr,"!",2) ; これはIRISの文字列であることに留意
 	Set cell=ws."__getitem__"(caddr)
 	set cell.value=cell.value+1
 	do wb.save("/home/irisowner/rsc/Book1.xlsx")
+
+	; 下記のpythonと等価の処理。
+	/*
+	import openpyxl
+
+	wb=openpyxl.load_workbook("c:/temp/Book1.xlsx")
+	ws=wb["Sheet1"]
+	cell=ws[wb.defined_names['aaa'].attr_text.split('!')[1]]
+	cell.value=cell.value+1
+	wb.save("c:/temp/Book1.xlsx")
+	*/	
 }
 
 }
