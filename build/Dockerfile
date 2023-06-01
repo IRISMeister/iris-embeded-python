@@ -9,7 +9,7 @@ ARG COMMIT_ID="unknown"
 #RUN apt-get update && apt-get install -y language-pack-ja && update-locale LANG=ja_JP.UTF-8
 #USER irisowner
 
-RUN pip install pandas numpy_financial matplotlib scikit-learn boto3 geopy
+RUN pip install pandas numpy_financial matplotlib scikit-learn boto3 geopy openpyxl
 # if you have a CUDA environment
 #RUN pip install pycuda
 
@@ -46,3 +46,4 @@ RUN iris start $ISC_PACKAGE_INSTANCENAME nostu quietly \
  && touch $ISC_PACKAGE_INSTALLDIR/mgr/messages.log \
  && echo $COMMIT_ID > $HOME/commit.txt
 
+COPY --chown=$ISC_PACKAGE_IRISUSER:$ISC_PACKAGE_IRISGROUP rsc/ rsc/

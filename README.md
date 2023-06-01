@@ -107,3 +107,12 @@ csp min=3となっている関係で、3コール目までは発生。Windowsで
 ```
   "p1": "\u0000\u0000\u0000"
 ```
+
+ObjestScriptからのopenpyxl使用例
+```
+$ docker-compose exec iris iris session iris "##class(Test.ObjectScript).new()"
+$ docker-compose exec iris iris session iris "##class(Test.ObjectScript).modify()"
+$ docker-compose exec iris iris session iris "##class(Test.ObjectScript).modify2()"
+$ docker compose cp iris:/home/irisowner/rsc/ /mnt/c/temp
+```
+Windowsでc:\temp\rsc\a.xlsx, Book1.xlsxを開く。
