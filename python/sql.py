@@ -8,3 +8,5 @@ def run():
 
     df = iris.sql.exec('select ID,Price p1 ,Price*2 p2 from HoleFoods.Product').dataframe()
     print(df)
+
+run()

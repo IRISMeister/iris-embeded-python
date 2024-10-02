@@ -1,5 +1,4 @@
-FROM containers.intersystems.com/intersystems/iris-community:2023.1.0.229.0
-
+FROM containers.intersystems.com/intersystems/iris-community:2024.1
 ARG COMMIT_ID="unknown"
 
 #USER root
@@ -47,3 +46,6 @@ RUN iris start $ISC_PACKAGE_INSTANCENAME nostu quietly \
  && echo $COMMIT_ID > $HOME/commit.txt
 
 COPY --chown=$ISC_PACKAGE_IRISUSER:$ISC_PACKAGE_IRISGROUP rsc/ rsc/
+
+# python(irispythonではなく)からSQLのクエリコンパイラを実行する際に必要なライブラリを加えるため
+ENV LD_LIBRARY_PATH=$ISC_PACKAGE_INSTALLDIR/bin:$LD_LIBRARY_PATH
