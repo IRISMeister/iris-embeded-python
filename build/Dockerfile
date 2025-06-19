@@ -1,4 +1,4 @@
-FROM containers.intersystems.com/intersystems/iris:2024.1
+FROM containers.intersystems.com/intersystems/iris-community:2025.1
 ARG COMMIT_ID="unknown"
 
 #USER root
@@ -7,19 +7,6 @@ ARG COMMIT_ID="unknown"
 ### IRIS itself doesn't require ja language pack
 #RUN apt-get update && apt-get install -y language-pack-ja && update-locale LANG=ja_JP.UTF-8
 #USER irisowner
-
-RUN pip install pandas numpy_financial matplotlib scikit-learn boto3 geopy openpyxl
-# if you have a CUDA environment
-#RUN pip install pycuda
-
-# Community developed sqlalchemy driver.
-RUN pip install sqlalchemy
-RUN pip install sqlalchemy-iris https://github.com/intersystems-community/intersystems-irispython/releases/download/3.6.0/intersystems_iris-3.6.0-py3-none-any.whl
-
-#RUN python3 -m venv  venv && venv/bin/pip install pandas numpy_financial matplotlib scikit-learn boto3 geopy openpyxl
-#RUN venv/bin/pip install sqlalchemy
-#RUN venv/bin/pip install sqlalchemy-iris https://github.com/intersystems-community/intersystems-irispython/releases/download/3.6.0/intersystems_iris-3.6.0-py3-none-any.whl
-
 
 ENV SRCDIR=src
 ENV INITDIR=init
@@ -54,3 +41,9 @@ COPY --chown=$ISC_PACKAGE_IRISUSER:$ISC_PACKAGE_IRISGROUP rsc/ rsc/
 
 # python(irispythonではなく)からSQLのクエリコンパイラを実行する際に必要なライブラリを加えるため
 ENV LD_LIBRARY_PATH=$ISC_PACKAGE_INSTALLDIR/bin:$LD_LIBRARY_PATH
+
+RUN python3 -m venv venv && venv/bin/pip install pandas numpy_financial matplotlib scikit-learn boto3 geopy openpyxl
+# Community developed sqlalchemy driver.
+RUN venv/bin/pip install sqlalchemy
+RUN venv/bin/pip install sqlalchemy-iris https://github.com/intersystems-community/intersystems-irispython/releases/download/3.9.2/intersystems_iris-3.9.2-py3-none-any.whl
+

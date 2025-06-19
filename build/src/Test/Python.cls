@@ -3,6 +3,9 @@ Class Test.Python
 
 ClassMethod test1() [ Language = python ]
 {
+#import sys
+#sys.path += ['/home/irisowner/venv/lib/python3.12/site-packages']
+
 import iris
 import pandas as pd
 import numpy as np

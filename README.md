@@ -3,17 +3,17 @@
 Use _SYSTEM / SYS as a credential.
 
 ```
-$ docker-compose up -d
+$ docker compose up -d
 ```
 
 全て実行
 ```
-$ docker-compose exec iris iris session iris "runall"
+$ docker compose exec iris iris session iris "runall"
 ```
 
 個別実行
 ```
-$ docker-compose exec iris iris session iris "##class(Test.Python).test1()"
+$ docker compose exec iris iris session iris "##class(Test.Python).test1()"
 <class 'pandas.core.frame.DataFrame'>
          id    p1     p2
 0   SKU-101  11.8   23.6
@@ -79,7 +79,6 @@ $ curl -u "appuser:sys" -H "Content-Type: application/json" http://localhost:527
                                  Dload  Upload   Total   Spent    Left  Speed
 100    70  100    70    0     0   9417      0 --:--:-- --:--:-- --:--:-- 10000
 {
-  "p1": "123",
   "A": "apple",
   "B": "banana",
   "C": "carrot",
@@ -102,17 +101,55 @@ $ curl -u "appuser:sys" -X POST -H "Content-Type: application/json" -d "@req.jso
 }
 ```
 
-PythonでDispatchを記述した場合に限り、起動直後(cspのデーモンが存在しない)のコール時のみ/:p1で渡した値が正しく「伝わらない」問題あり。
-csp min=3となっている関係で、3コール目までは発生。Windowsでも発生。
-```
-  "p1": "\u0000\u0000\u0000"
-```
-
 ObjestScriptからのopenpyxl使用例
 ```
-$ docker-compose exec iris iris session iris "##class(Test.ObjectScript).new()"
-$ docker-compose exec iris iris session iris "##class(Test.ObjectScript).modify()"
-$ docker-compose exec iris iris session iris "##class(Test.ObjectScript).modify2()"
+$ docker compose exec iris iris session iris "##class(Test.ObjectScript).new()"
+$ docker compose exec iris iris session iris "##class(Test.ObjectScript).modify()"
+$ docker compose exec iris iris session iris "##class(Test.ObjectScript).modify2()"
 $ docker compose cp iris:/home/irisowner/rsc/ /mnt/c/temp
 ```
 Windowsでc:\temp\rsc\a.xlsx, Book1.xlsxを開く。
+
+# shellで実行する場合
+
+## IRIS内部から
+
+```
+$ iris session iris
+USER>:py
+>>> import pandas
+```
+
+## Python環境から
+
+```
+irisowner@iris:~$ venv/bin/python3
+Python 3.12.3 (main, Feb  4 2025, 14:48:35) [GCC 13.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import pandas
+>>> import iris
+```
+
+# IRISにおけるPythonの設定確認
+
+merge.cpfでCPF_PythonPathを指定しています。これをしないと、pip installしたライブラリをIRIS内のpythonシェル内から見つけることが出来ません。
+
+>pip installしたライブラリ=Dockerfileで記述しています。
+
+```
+USER>do ##class(%SYS.Python).GetPythonInfo(.info)
+USER>w
+
+info("AllowAnyPythonForIntegratedML")=0
+info("BuildVersion")="3.12.3 (main, Sep 11 2024, 14:17:37) [GCC 13.2.0]"
+info("BuildVersionShort")="3.12.3"
+info("CPF_PythonPath")="/home/irisowner/venv/lib/python3.12/site-packages"    <==merge.cpfで指定
+info("CPF_PythonRuntimeLibrary")=""
+info("CPF_PythonRuntimeLibraryVersion")=""
+info("IRISInsidePython")=2
+info("PythonInsideIRIS")=7
+info("RunningLibrary")=""
+info("RunningVersion")="Not Loaded"
+info("iris_site.py_platform")="dockerubuntux64"
+USER>
+```

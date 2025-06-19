@@ -5,3 +5,4 @@ WebServer=1
 [config]
 globals=0,0,32,0,0,0
 routines=32
+PythonPath=/home/irisowner/venv/lib/python3.12/site-packages
