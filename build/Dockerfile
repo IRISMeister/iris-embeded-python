@@ -1,4 +1,4 @@
-FROM containers.intersystems.com/intersystems/iris-community:2024.1
+FROM containers.intersystems.com/intersystems/iris:2024.1
 ARG COMMIT_ID="unknown"
 
 #USER root
@@ -15,6 +15,11 @@ RUN pip install pandas numpy_financial matplotlib scikit-learn boto3 geopy openp
 # Community developed sqlalchemy driver.
 RUN pip install sqlalchemy
 RUN pip install sqlalchemy-iris https://github.com/intersystems-community/intersystems-irispython/releases/download/3.6.0/intersystems_iris-3.6.0-py3-none-any.whl
+
+#RUN python3 -m venv  venv && venv/bin/pip install pandas numpy_financial matplotlib scikit-learn boto3 geopy openpyxl
+#RUN venv/bin/pip install sqlalchemy
+#RUN venv/bin/pip install sqlalchemy-iris https://github.com/intersystems-community/intersystems-irispython/releases/download/3.6.0/intersystems_iris-3.6.0-py3-none-any.whl
+
 
 ENV SRCDIR=src
 ENV INITDIR=init

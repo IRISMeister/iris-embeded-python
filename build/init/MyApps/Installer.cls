@@ -42,6 +42,8 @@ ClassMethod setup(ByRef tVars) As %Status
     $$$ThrowOnError(tSC)
     Set tSC=$system.OBJ.LoadStream(r.HttpResponse.Data,"c")
     $$$ThrowOnError(tSC)
+    zpm "enable -map -globally"
+    zpm "enable -community"
 #EndIf
 
     Kill props
