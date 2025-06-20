@@ -153,3 +153,11 @@ info("RunningVersion")="Not Loaded"
 info("iris_site.py_platform")="dockerubuntux64"
 USER>
 ```
+
+# Debug
+
+CLIベースのブレークポイント設定/デバッグは可能。
+```
+USER>w ##class(Test.Debug).Test1py()
+> /usr/irissys/mgr/user/Debug(5)Test1py()
+```
