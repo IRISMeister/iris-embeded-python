@@ -8,12 +8,12 @@ $ docker compose up -d
 
 全て実行
 ```
-$ docker compose exec iris iris session iris "runall"
+$ docker compose exec iris iris session iris -UMYAPP -UMYAPP "runall"
 ```
 
 個別実行
 ```
-$ docker compose exec iris iris session iris "##class(Test.Python).test1()"
+$ docker compose exec iris iris session iris -UMYAPP "##class(Test.Python).test1()"
 <class 'pandas.core.frame.DataFrame'>
          id    p1     p2
 0   SKU-101  11.8   23.6
@@ -74,7 +74,7 @@ float64
 
 RESTコール (実験コードです)
 ```
-$ curl -u "appuser:sys" -H "Content-Type: application/json" http://localhost:52773/csp/user-rest/getp | jq
+$ curl -u "appuser:sys" -H "Content-Type: application/json" http://localhost:52773/csp/myapp-rest/getp | jq
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100    70  100    70    0     0   9417      0 --:--:-- --:--:-- --:--:-- 10000
@@ -85,7 +85,7 @@ $ curl -u "appuser:sys" -H "Content-Type: application/json" http://localhost:527
   "D": "drink",
   "E": "卵"
 }
-$ curl -u "appuser:sys" -X POST -H "Content-Type: application/json" -d "@req.json" http://localhost:52773/csp/user-rest/postp/123 | jq
+$ curl -u "appuser:sys" -X POST -H "Content-Type: application/json" -d "@req.json" http://localhost:52773/csp/myapp-rest/postp/123 | jq
 
 % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
@@ -103,9 +103,9 @@ $ curl -u "appuser:sys" -X POST -H "Content-Type: application/json" -d "@req.jso
 
 ObjestScriptからのopenpyxl使用例
 ```
-$ docker compose exec iris iris session iris "##class(Test.ObjectScript).new()"
-$ docker compose exec iris iris session iris "##class(Test.ObjectScript).modify()"
-$ docker compose exec iris iris session iris "##class(Test.ObjectScript).modify2()"
+$ docker compose exec iris iris session iris -UMYAPP "##class(Test.ObjectScript).new()"
+$ docker compose exec iris iris session iris -UMYAPP "##class(Test.ObjectScript).modify()"
+$ docker compose exec iris iris session iris -UMYAPP "##class(Test.ObjectScript).modify2()"
 $ docker compose cp iris:/home/irisowner/rsc/ /mnt/c/temp
 ```
 Windowsでc:\temp\rsc\a.xlsx, Book1.xlsxを開く。

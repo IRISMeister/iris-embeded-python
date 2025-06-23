@@ -11,7 +11,7 @@
     },
     "objectscript.conn": {
         "server": "iris",
-        "ns": "USER",
-        "active": true
+        "ns": "MYAPP",
+        "active": false
     }
 }

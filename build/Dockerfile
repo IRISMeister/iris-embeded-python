@@ -19,8 +19,10 @@ RUN iris start $ISC_PACKAGE_INSTANCENAME \
  && printf 'Set tSC=##class(MyApps.Installer).setup() Do:+tSC=0 $SYSTEM.Process.Terminate($JOB,1) h\n' | iris session $ISC_PACKAGE_INSTANCENAME \
  && iris stop $ISC_PACKAGE_INSTANCENAME quietly
 
-# separated python related code because "zpm install samples-bi" takes long.
+# separated app related code because "zpm install samples-bi" takes too long.
 COPY --chown=$ISC_PACKAGE_IRISUSER:$ISC_PACKAGE_IRISGROUP src/ $SRCDIR/
+COPY --chown=$ISC_PACKAGE_IRISUSER:$ISC_PACKAGE_IRISGROUP sql/ sql/
+COPY --chown=$ISC_PACKAGE_IRISUSER:$ISC_PACKAGE_IRISGROUP Samples-Data/ Samples-Data/
 RUN iris start $ISC_PACKAGE_INSTANCENAME \ 
  && printf 'Set tSC=##class(MyApps.Installer).appsetup() Do:+tSC=0 $SYSTEM.Process.Terminate($JOB,1) h\n' | iris session $ISC_PACKAGE_INSTANCENAME \
  && iris stop $ISC_PACKAGE_INSTANCENAME quietly
@@ -40,7 +42,8 @@ RUN iris start $ISC_PACKAGE_INSTANCENAME nostu quietly \
 COPY --chown=$ISC_PACKAGE_IRISUSER:$ISC_PACKAGE_IRISGROUP rsc/ rsc/
 
 # python(irispythonではなく)からSQLのクエリコンパイラを実行する際に必要なライブラリを加えるため
-ENV LD_LIBRARY_PATH=$ISC_PACKAGE_INSTALLDIR/bin:$LD_LIBRARY_PATH
+#ENV LD_LIBRARY_PATH=$ISC_PACKAGE_INSTALLDIR/bin:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=$ISC_PACKAGE_INSTALLDIR/bin
 
 RUN python3 -m venv venv && venv/bin/pip install pandas numpy_financial matplotlib scikit-learn boto3 geopy openpyxl
 # Community developed sqlalchemy driver.

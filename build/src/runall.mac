@@ -36,6 +36,8 @@ class() public {
     w "Should be ""Test2b"" : ",o.VariableMessage,!
     Set retval=o.Sql()
     w "Should return 1 : ",retval,!
+
+    Do ##class(Test.SQLStoredProc).run()
 }
 
 builtins() public {
