@@ -1,0 +1,3 @@
+[submodule "build/Samples-Data"]
+	path = build/Samples-Data
+	url = https://github.com/intersystems/Samples-Data.git
